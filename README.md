@@ -92,3 +92,9 @@ El Quarkus IT job es el que valida Fase 0 de doc 07. Ver [`.github/SECRETS_SETUP
 - [`docs/java/06-semantic-versioning-en-java.md`](../../../docs/java/06-semantic-versioning-en-java.md) — semver, release-please, CI/CD patterns.
 - [Extension repo](https://github.com/ahincho/nova-java-api-standard-quarkus-extension) — codigo fuente del extension que esta instancia consume.
 - [`instances/nova-java-example/`](../../nova-java-example/) — instancia gemela Spring Boot (mismo patron, distinto framework).
+
+## License
+
+Eclipse Public License 2.0 — see [LICENSE](LICENSE).
+
+Copyright © 2026 Angel Hincho.
