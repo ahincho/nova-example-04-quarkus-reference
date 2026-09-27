@@ -38,9 +38,7 @@ repositories {
             }
         }
     }
-    // Repo del Quarkus extension con artifactId corto: pe.edu.nova.java.starters:nova-quarkus-api-ext
-    // (artifactId largo original 'nova-java-api-standard-quarkus-extension' producia paquetes
-    // fantasma en GH Packages con maven-publish de Gradle; ver doc 07 seccion causa raiz).
+    // nova-api-standard, que la extensión trae como dependencia.
     maven {
         name = "GitHubPackages-Nova-ApiStandard"
         url = uri("https://maven.pkg.github.com/ahincho/nova-java-01-api-standard")
@@ -71,7 +69,7 @@ dependencies {
     // para que las respuestas se serialicen como ApiResponse<T> segun el contrato
     // de nova-api-standard. Sin esto, las excepciones no controladas retornarian
     // un JSON vacio y el timestamp de ApiMetadata se serializaria como epoch ms.
-    implementation("pe.edu.nova.java.starters:nova-quarkus-api-ext:1.0.1")
+    implementation("pe.edu.nova.java.starters:nova-api-standard-quarkus-extension:2.0.1")
 
     // Tests
     testImplementation("io.quarkus:quarkus-junit")
