@@ -14,32 +14,32 @@ on:
 
 jobs:
   build:
-    uses: ahincho/nova-devops/.github/workflows/reusable-build-gradle.yml@main
+    uses: ahincho/nova-shared-02-pipelines/.github/workflows/reusable-build-gradle.yml@main
     secrets: inherit
 
   sonar:
     if: github.event_name == 'pull_request' && vars.SONAR_ENABLED == 'true'
-    uses: ahincho/nova-devops/.github/workflows/reusable-sonarcloud-gradle.yml@main
+    uses: ahincho/nova-shared-02-pipelines/.github/workflows/reusable-sonarcloud-gradle.yml@main
     with:
       sonar-org: ahincho
       sonar-project-key: ahincho_nova-java-quarkus-example
     secrets: inherit
 
   matrix:
-    uses: ahincho/nova-devops/.github/workflows/reusable-build-matrix.yml@main
+    uses: ahincho/nova-shared-02-pipelines/.github/workflows/reusable-build-matrix.yml@main
     with:
       build-tool: gradle
     secrets: inherit
 
   owasp:
-    uses: ahincho/nova-devops/.github/workflows/reusable-owasp-check.yml@main
+    uses: ahincho/nova-shared-02-pipelines/.github/workflows/reusable-owasp-check.yml@main
     with:
       build-tool: gradle
     secrets: inherit
 
   sbom:
     if: github.event_name == 'pull_request'
-    uses: ahincho/nova-devops/.github/workflows/reusable-sbom.yml@main
+    uses: ahincho/nova-shared-02-pipelines/.github/workflows/reusable-sbom.yml@main
     with:
       build-tool: gradle
     permissions:
@@ -64,20 +64,20 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Nova Setup Java
-        uses: ahincho/nova-devops/.github/actions/nova-setup-java@main
+        uses: ahincho/nova-shared-02-pipelines/.github/actions/nova-setup-java@main
         with:
           java-version: '25'
           build-tool: gradle
           packages-read-token: ${{ secrets.NOVA_PACKAGES_READ_TOKEN || secrets.NOVA_RELEASE_PAT }}
 
       - name: Nova Validate Build
-        uses: ahincho/nova-devops/.github/actions/nova-validate-build@main
+        uses: ahincho/nova-shared-02-pipelines/.github/actions/nova-validate-build@main
         with:
           min-java-version: '25'
 
       - name: Nova Gather Facts
         id: facts
-        uses: ahincho/nova-devops/.github/actions/nova-gather-facts@main
+        uses: ahincho/nova-shared-02-pipelines/.github/actions/nova-gather-facts@main
         with:
           version-source: gradle-properties
 

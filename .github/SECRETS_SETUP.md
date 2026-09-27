@@ -4,7 +4,7 @@ Este repositorio usa los siguientes secrets en GitHub Actions para resolver las 
 
 ## Acceso a la configuracion
 
-`https://github.com/ahincho/nova-java-quarkus-example/settings/secrets/actions`
+`https://github.com/ahincho/nova-java-21-quarkus-example/settings/secrets/actions`
 
 ## Secrets requeridos
 
@@ -12,7 +12,7 @@ Este repositorio usa los siguientes secrets en GitHub Actions para resolver las 
 
 **Que es:** Personal Access Token (fine-grained recomendado) con scope **`read:packages`** sobre los repos de Nova Platform.
 
-**Por que se necesita:** Este repo consume `pe.edu.nova.java.starters:nova-java-api-standard-quarkus-extension` (publicado en `ahincho/nova-java-api-standard-quarkus-extension`) y `pe.edu.nova.java.libs:nova-api-standard` (publicado en `ahincho/nova-java-api-standard`). El `GITHUB_TOKEN` automatico NO puede leer packages de OTROS repos, solo del repo actual. Por eso necesitamos un PAT con `read:packages` explicito.
+**Por que se necesita:** Este repo consume `pe.edu.nova.java.starters:nova-java-api-standard-quarkus-extension` (publicado en `ahincho/nova-java-10-api-standard-quarkus-extension`) y `pe.edu.nova.java.libs:nova-api-standard` (publicado en `ahincho/nova-java-01-api-standard`). El `GITHUB_TOKEN` automatico NO puede leer packages de OTROS repos, solo del repo actual. Por eso necesitamos un PAT con `read:packages` explicito.
 
 **Como crearlo:**
 
@@ -22,7 +22,7 @@ Este repositorio usa los siguientes secrets en GitHub Actions para resolver las 
    - **Expiration:** 1 year (renovar antes)
    - **Resource owner:** `ahincho`
    - **Repository access:** `Only select repositories` → agregar los 2 repos de Nova:
-     - `ahincho/nova-java-api-standard-quarkus-extension`
+     - `ahincho/nova-java-10-api-standard-quarkus-extension`
      - `ahincho/nova-java-standard`
    - **Permissions:**
      - **Packages:** Read-only
@@ -31,7 +31,7 @@ Este repositorio usa los siguientes secrets en GitHub Actions para resolver las 
 
 **Como configurarlo en este repo:**
 
-1. `https://github.com/ahincho/nova-java-quarkus-example/settings/secrets/actions/new`
+1. `https://github.com/ahincho/nova-java-21-quarkus-example/settings/secrets/actions/new`
 2. **Name:** `NOVA_PACKAGES_READ_TOKEN`
 3. **Secret:** pegar el token
 4. Click **Add secret**.
@@ -58,7 +58,7 @@ Para analisis SonarCloud. Si no se configura, el job `sonar` se salta silenciosa
 
 ```
 [ ] NOVA_PACKAGES_READ_TOKEN configured (con scope read:packages sobre
-    ahincho/nova-java-api-standard-quarkus-extension Y ahincho/nova-java-api-standard)
+    ahincho/nova-java-10-api-standard-quarkus-extension Y ahincho/nova-java-01-api-standard)
 [ ] (Opcional) NVD_API_KEY configured
 [ ] (Opcional) SONAR_TOKEN configured
 ```
