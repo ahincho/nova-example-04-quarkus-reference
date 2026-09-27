@@ -1,4 +1,4 @@
-# nova-java-quarkus-example
+# nova-example-quarkus-reference
 
 Instancia Quarkus 3.33 del meta-framework **Nova Platform**.
 
