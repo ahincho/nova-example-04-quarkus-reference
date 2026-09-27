@@ -4,7 +4,7 @@ Este repositorio usa los siguientes secrets en GitHub Actions para resolver las 
 
 ## Acceso a la configuracion
 
-`https://github.com/ahincho/nova-java-21-quarkus-example/settings/secrets/actions`
+`https://github.com/ahincho/nova-example-04-quarkus-reference/settings/secrets/actions`
 
 ## Secrets requeridos
 
@@ -31,7 +31,7 @@ Este repositorio usa los siguientes secrets en GitHub Actions para resolver las 
 
 **Como configurarlo en este repo:**
 
-1. `https://github.com/ahincho/nova-java-21-quarkus-example/settings/secrets/actions/new`
+1. `https://github.com/ahincho/nova-example-04-quarkus-reference/settings/secrets/actions/new`
 2. **Name:** `NOVA_PACKAGES_READ_TOKEN`
 3. **Secret:** pegar el token
 4. Click **Add secret**.
