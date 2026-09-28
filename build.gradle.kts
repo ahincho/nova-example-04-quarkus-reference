@@ -94,7 +94,11 @@ dependencyCheck {
     // inyectados por reusable-owasp-check.yml. Local sin env: never fail + sin key.
     failBuildOnCVSS = (System.getenv("NOVA_OWASP_FAIL_ON_CVSS") ?: "11").toFloat()
     nvd.apiKey = System.getenv("NVD_API_KEY") ?: ""
-    skipConfigurations = listOf("testCompileClasspath", "testRuntimeClasspath")
+    // Solo lo que la aplicación compila y despliega, igual que 04-mask-utils, 07 y 09. El
+    // plugin de Quarkus agrega configuraciones que no llegan al jar: las del Dev UI (dompurify,
+    // echarts), las de despliegue que usa la augmentation y las de test. Checkstyle es
+    // herramienta de build. Escanearlas hacía fallar el gate por CVE que no se despliegan.
+    scanConfigurations = listOf("compileClasspath", "runtimeClasspath")
     formats = listOf("HTML", "JSON")
     // CRITICO: reusable-owasp-check.yml descarga un mirror NVD pre-construido
     // (~119MB) desde ahincho/nova-shared-02-pipelines (releases/tag/nvd-mirror), reconstruido
