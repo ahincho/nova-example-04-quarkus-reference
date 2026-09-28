@@ -10,4 +10,4 @@ pluginManagement {
         id(quarkusPluginId) version quarkusPluginVersion
     }
 }
-rootProject.name="nova-java-quarkus-example"
+rootProject.name="nova-example-quarkus-reference"

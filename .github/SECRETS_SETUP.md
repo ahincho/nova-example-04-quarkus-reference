@@ -18,7 +18,7 @@ Este repositorio usa los siguientes secrets en GitHub Actions para resolver las 
 
 1. Ir a `https://github.com/settings/personal-access-tokens/new` (fine-grained) o `https://github.com/settings/tokens?type=personal` (classic).
 2. **Fine-grained token** (recomendado):
-   - **Name:** `Nova Packages Read Token - nova-java-quarkus-example`
+   - **Name:** `Nova Packages Read Token - nova-example-04-quarkus-reference`
    - **Expiration:** 1 year (renovar antes)
    - **Resource owner:** `ahincho`
    - **Repository access:** `Only select repositories` → agregar los 2 repos de Nova:

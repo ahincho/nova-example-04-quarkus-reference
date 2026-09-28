@@ -38,9 +38,7 @@ repositories {
             }
         }
     }
-    // Repo del Quarkus extension con artifactId corto: pe.edu.nova.java.starters:nova-quarkus-api-ext
-    // (artifactId largo original 'nova-java-api-standard-quarkus-extension' producia paquetes
-    // fantasma en GH Packages con maven-publish de Gradle; ver doc 07 seccion causa raiz).
+    // nova-api-standard, que la extensión trae como dependencia.
     maven {
         name = "GitHubPackages-Nova-ApiStandard"
         url = uri("https://maven.pkg.github.com/ahincho/nova-java-01-api-standard")
@@ -71,7 +69,7 @@ dependencies {
     // para que las respuestas se serialicen como ApiResponse<T> segun el contrato
     // de nova-api-standard. Sin esto, las excepciones no controladas retornarian
     // un JSON vacio y el timestamp de ApiMetadata se serializaria como epoch ms.
-    implementation("pe.edu.nova.java.starters:nova-quarkus-api-ext:1.0.1")
+    implementation("pe.edu.nova.java.starters:nova-api-standard-quarkus-extension:2.0.1")
 
     // Tests
     testImplementation("io.quarkus:quarkus-junit")
@@ -96,7 +94,11 @@ dependencyCheck {
     // inyectados por reusable-owasp-check.yml. Local sin env: never fail + sin key.
     failBuildOnCVSS = (System.getenv("NOVA_OWASP_FAIL_ON_CVSS") ?: "11").toFloat()
     nvd.apiKey = System.getenv("NVD_API_KEY") ?: ""
-    skipConfigurations = listOf("testCompileClasspath", "testRuntimeClasspath")
+    // Solo lo que la aplicación compila y despliega, igual que 04-mask-utils, 07 y 09. El
+    // plugin de Quarkus agrega configuraciones que no llegan al jar: las del Dev UI (dompurify,
+    // echarts), las de despliegue que usa la augmentation y las de test. Checkstyle es
+    // herramienta de build. Escanearlas hacía fallar el gate por CVE que no se despliegan.
+    scanConfigurations = listOf("compileClasspath", "runtimeClasspath")
     formats = listOf("HTML", "JSON")
     // CRITICO: reusable-owasp-check.yml descarga un mirror NVD pre-construido
     // (~119MB) desde ahincho/nova-shared-02-pipelines (releases/tag/nvd-mirror), reconstruido

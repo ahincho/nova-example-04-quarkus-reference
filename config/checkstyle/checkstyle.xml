@@ -4,7 +4,7 @@
           "https://checkstyle.org/dtds/configuration_1_3.dtd">
 
 <!--
-  Checkstyle configuration for nova-java-quarkus-example instance.
+  Checkstyle configuration for nova-example-quarkus-reference.
   Configuracion minima (sun_checks base) porque esta instancia es solo un
   ejemplo de integracion; las reglas estrictas viven en las librerias puras.
 -->
