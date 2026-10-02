@@ -64,12 +64,11 @@ dependencies {
     implementation("io.quarkus:quarkus-rest-jackson")
     implementation("io.quarkus:quarkus-arc")
 
-    // Nova Quarkus extension (publicada en GitHub Packages).
-    // Esta extension aporta el ExceptionMapper generico y el ObjectMapperCustomizer
-    // para que las respuestas se serialicen como ApiResponse<T> segun el contrato
-    // de nova-api-standard. Sin esto, las excepciones no controladas retornarian
-    // un JSON vacio y el timestamp de ApiMetadata se serializaria como epoch ms.
-    implementation("pe.edu.nova.java.starters:nova-api-standard-quarkus-extension:2.0.1")
+    // Extensión de Quarkus de Nova (publicada en GitHub Packages). Desde la 3.0.0 trae su
+    // módulo de deployment y Quarkus lo resuelve solo, así que aquí se declara únicamente
+    // el runtime. Aporta el filtro del sobre de éxito, los mappers de los errores por capas
+    // (ADR-031 y ADR-050) y el ObjectMapperCustomizer, que serializa el Instant como ISO-8601.
+    implementation("pe.edu.nova.java.starters:nova-api-standard-quarkus-extension:3.0.0")
 
     // Tests
     testImplementation("io.quarkus:quarkus-junit")

@@ -25,10 +25,15 @@ jobs:
       sonar-project-key: ahincho_nova-example-quarkus-reference
     secrets: inherit
 
+  # La extensión 3.0.0 trae un módulo de deployment compilado para Java 25 (class file 69) y
+  # Quarkus lo carga en la JVM que corre Gradle: con una JVM 21 el build falla en
+  # quarkusAppPartsBuild. ADR-003 fija Java 25 como objetivo de todos los repos, así que la
+  # matriz valida solo Java 25.
   matrix:
     uses: ahincho/nova-shared-02-pipelines/.github/workflows/reusable-build-matrix.yml@main
     with:
       build-tool: gradle
+      java-versions: '["25"]'
     secrets: inherit
 
   owasp:
