@@ -10,14 +10,14 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
 /**
- * Tests de integracion del {@link GreetingResource} consumiendo
- * {@code nova-java-api-standard-quarkus-extension}.
+ * Tests de integración del {@link GreetingResource} consumiendo
+ * {@code nova-api-standard-quarkus-extension}.
  * <p>
- Estos tests validan que el extension se descubre correctamente via
- * CDI/Jandex en una app Quarkus y aplica la serializacion esperada.
- * Son la unica fuente de verdad para "el extension funciona end-to-end"
- * (los tests unitarios en el repo del extension son solo logica pura,
- * sin contexto Quarkus, ver README del extension).
+ * Estos tests validan que la extensión funciona en una app Quarkus real: su
+ * módulo de deployment registra sus beans al construir la aplicación, sin
+ * {@code quarkus.index-dependency}, y los errores salen en el sobre de Nova con
+ * su {@code traceId}. El contrato de la extensión lo prueba su propio módulo de
+ * deployment; este ejemplo comprueba que una app que la consume responde igual.
  */
 @QuarkusTest
 class GreetingResourceTest {
@@ -37,7 +37,7 @@ class GreetingResourceTest {
     }
 
     @Test
-    void errorEndpointMapsIllegalArgumentExceptionToBadRequestApiResponse() {
+    void errorEndpointAnswersInvalidInputAsBadRequestEnvelope() {
         given()
             .when().get("/hello/error")
             .then()
@@ -46,8 +46,12 @@ class GreetingResourceTest {
                 .body("success", is(false))
                 .body("status", is(400))
                 .body("data", nullValue())
+                .body("errors.size()", is(1))
                 .body("errors[0].code", equalTo("BAD_REQUEST"))
-                .body("errors[0].message", equalTo("name must not be empty"));
+                .body("errors[0].message", equalTo("El nombre no puede estar vacío"))
+                .body("errors[0].field", equalTo("name"))
+                .body("metadata.traceId", notNullValue())
+                .body("metadata.timestamp", notNullValue());
     }
 
     @Test
@@ -63,12 +67,11 @@ class GreetingResourceTest {
 
     @Test
     void blankPathParamMapsToBadRequest() {
-        // PathParam blank (e.g. "   ") se valida en el resource y lanza
-        // IllegalArgumentException, que el mapper mapea a 400 BAD_REQUEST.
-        // NOTA: JAX-RS no URL-decodea path params automaticamente en
-        // Quarkus REST (resteasy-reactive), asi que pasamos el valor
-        // como path param tipado (no como string en la URL) para evitar
-        // el re-encoding de RestAssured.
+        // Un PathParam en blanco (por ejemplo "   ") se valida en el recurso y lanza
+        // ApplicationError.invalidInput, que la extensión responde como 400 BAD_REQUEST.
+        // NOTA: JAX-RS no URL-decodea los path params automáticamente en Quarkus REST
+        // (resteasy-reactive), así que pasamos el valor como path param tipado (no como
+        // string en la URL) para evitar el re-encoding de RestAssured.
         given()
             .pathParam("name", "   ")
             .when().get("/hello/{name}")
@@ -76,6 +79,9 @@ class GreetingResourceTest {
                 .statusCode(400)
                 .body("success", is(false))
                 .body("status", is(400))
-                .body("errors[0].code", equalTo("BAD_REQUEST"));
+                .body("errors[0].code", equalTo("BAD_REQUEST"))
+                .body("errors[0].message", equalTo("El nombre no puede estar en blanco"))
+                .body("errors[0].field", equalTo("name"))
+                .body("metadata.traceId", notNullValue());
     }
 }
